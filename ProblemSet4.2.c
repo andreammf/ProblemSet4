@@ -1,5 +1,5 @@
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 char pixels[200];
@@ -60,18 +60,19 @@ int write(void){
 }
 
 void decode(void){
-    int a = 0;
-    int b = 0;
-    int c = 1;
-    char pixelsDecompressed = '1';
-
-    for (int i = 0; compressed[i] != '\0'; i++){
-       if (pixels[i] != '\n') {
-           if (pixels[i] != c) {
-               pixels[c] = a + 48;
-               c++;
-               a = 0;
-           }
-       }
+  int n = strlen(compressed);
+  int col = 0;
+  int letter = 1;
+  for (int i = 0; i < n; i++) {
+    int freq = compressed[i]-'0';
+    for (int j = 0; j < freq; j++) {
+      printf("%c", letter+'0');
+      col++;
+      if (col == 9) {
+          col = 0;
+          printf("\n");
+      }
     }
+    letter = 1-letter;
+  }
 }
